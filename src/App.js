@@ -1,19 +1,34 @@
 import React from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+
 import Header from './components/Header'
 import Container from './components/Container'
 import Search from './components/Search'
+import Organization from './components/Organization'
 import Footer from './components/Footer'
 
 const App = () => {
   return (
     <div className="flex flex-col h-full">
-      <Header />
-      <main className="flex-1">
-        <Container>
-          <Search />
-        </Container>
-      </main>
-      <Footer />
+      <Router>
+        <Header />
+        <main className="flex-1">
+          <Container>
+            <Switch>
+              <Route exact path="/">
+                <div>Home</div>
+              </Route>
+              <Route path="/search">
+                <Search />
+              </Route>
+              <Route path="/org/:id">
+                <Organization />
+              </Route>
+            </Switch>
+          </Container>
+        </main>
+        <Footer />
+      </Router>
     </div>
   )
 }

@@ -1,10 +1,13 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Table = ({ orgs }) => {
   const renderRow = (org, i) => {
     return (
       <tr key={org._id} className={i % 2 !== 0 ? 'bg-gray-100' : ''}>
-        <td className="border px-4 py-2">{org.Service_Name}</td>
+        <td className="border px-4 py-2">
+          <Link to={`org/${org._id}`}>{org.Service_Name}</Link>
+        </td>
       </tr>
     )
   }
