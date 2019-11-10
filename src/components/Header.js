@@ -5,8 +5,8 @@ import Container from './Container'
 
 const Header = () => {
   return (
-    <header className="w-auto border-b bg-gray-100">
-      <Container>
+    <header className="w-auto border-b border-gray-400 bg-gray-300">
+      <Container padding="px-6 py-4">
         <Navbar />
       </Container>
     </header>

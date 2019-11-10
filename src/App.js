@@ -12,8 +12,8 @@ const App = () => {
     <div className="flex flex-col h-full">
       <Router>
         <Header />
-        <main className="flex-1">
-          <Container>
+        <main className="flex-1 bg-gray-100">
+          <Container padding="px-6 py-10">
             <Switch>
               <Route exact path="/">
                 <div>Home</div>

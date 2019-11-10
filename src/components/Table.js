@@ -5,8 +5,13 @@ const Table = ({ orgs }) => {
   const renderRow = (org, i) => {
     return (
       <tr key={org._id} className={i % 2 !== 0 ? 'bg-gray-100' : ''}>
-        <td className="border px-4 py-2">
-          <Link to={`org/${org._id}`}>{org.Service_Name}</Link>
+        <td className="border px-4 py-3">
+          <Link
+            to={`org/${org._id}`}
+            className="text-gray-800 hover:text-gray-600"
+          >
+            {org.Service_Name}
+          </Link>
         </td>
       </tr>
     )

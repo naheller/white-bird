@@ -1,11 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Organization = props => {
-  useEffect(() => {
-    console.log('Org props', props)
-  }, [])
+  const [name, setName] = useState('')
 
-  return <div>Organization page</div>
+  useEffect(() => {
+    const urlId = window.location.pathname.replace('/org/', '');
+    const cachedData = JSON.parse(localStorage.getItem('white-bird-help-book'))
+    const selectedOrg = cachedData !== null ? cachedData.orgs.find(org => org._id === urlId) : undefined
+    
+    setName(selectedOrg ? selectedOrg.Service_Name : 'Organization not found')
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  return <div>{name}</div>
 }
 
 export default Organization
