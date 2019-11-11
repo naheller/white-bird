@@ -12,6 +12,9 @@ const Cards = ({ orgs }) => {
         {renderContactInfo(org)}
         <hr className="mt-1 mb-3 border-b border-t-0" />
         <p className="font-light text-gray-700">{org.Description_of_Service}</p>
+        <div className="flex justify-end">
+        <Link to={`org/${org._id}`}><button className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">Details</button></Link>
+        </div>
       </div>
     )
   }
