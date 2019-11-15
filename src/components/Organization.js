@@ -1,4 +1,5 @@
-import React, { useEffect, useState, Fragment } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Organization = () => {
   const [org, setOrg] = useState({
@@ -37,7 +38,7 @@ const Organization = () => {
     } = org
 
     return (
-      <div className="flex flex-col text-gray-800 font-light">
+      <div className="flex flex-col w-full text-gray-800 font-light">
         {!!Main_Phone.length && renderPhone(Main_Phone)}
         {!!Physical_Site_Address_1.length &&
           renderPhysicalAddress(Physical_Site_Address_1)}
@@ -135,7 +136,7 @@ const Organization = () => {
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
       >
-        <path d="M11 7l1.44 2.16c.31.47 1.01.84 1.57.84H17V8h-3l-1.44-2.16a5.94 5.94 0 0 0-1.4-1.4l-1.32-.88a1.72 1.72 0 0 0-1.7-.04L4 6v5h2V7l2-1-3 14h2l2.35-7.65L11 14v6h2v-8l-2.7-2.7L11 7zm1-3a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+        <path d="M11 7l1.44 2.16c.31.47 1.01.84 1.57.84H17V8h-3l-1.44-2.16a5.94 5.94 0 0 0-1.4-1.4l-1.32-.88a1.72 1.72 0 0 0-1.7-.04L4 6v5h2V7l2-1-3 14h2l2.35-7.65L11 14v6h2v-8l-2.7-2.7L11 7zm1-3a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
       </svg>
       <span className="font-semibold">ADA Access:&nbsp;</span>
       <span>{adaAccess}</span>
@@ -149,23 +150,39 @@ const Organization = () => {
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
       >
-        <path d="M7.41 9l2.24 2.24-.83 2L6 10.4l-3.3 3.3-1.4-1.42L4.58 9l-.88-.88c-.53-.53-1-1.3-1.3-2.12h2.2c.15.28.33.53.51.7l.89.9.88-.88C7.48 6.1 8 4.84 8 4H0V2h5V0h2v2h5v2h-2c0 1.37-.74 3.15-1.7 4.12L7.4 9zm3.84 8L10 20H8l5-12h2l5 12h-2l-1.25-3h-5.5zm.83-2h3.84L14 10.4 12.08 15z"/>
+        <path d="M7.41 9l2.24 2.24-.83 2L6 10.4l-3.3 3.3-1.4-1.42L4.58 9l-.88-.88c-.53-.53-1-1.3-1.3-2.12h2.2c.15.28.33.53.51.7l.89.9.88-.88C7.48 6.1 8 4.84 8 4H0V2h5V0h2v2h5v2h-2c0 1.37-.74 3.15-1.7 4.12L7.4 9zm3.84 8L10 20H8l5-12h2l5 12h-2l-1.25-3h-5.5zm.83-2h3.84L14 10.4 12.08 15z" />
       </svg>
       <span className="font-semibold">Languages spoken:&nbsp;</span>
       <span>{languages}</span>
     </div>
   )
 
+  const renderBackButton = () => (
+    <Link to="/search" className="mx-auto mt-auto">
+      <button className="bg-white hover:bg-gray-100 font-light text-gray-800 py-2 px-4 border rounded shadow-lg inline-flex items-center">
+        <svg
+          className="fill-current w-4 h-4 mr-2"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+        >
+          <path d="M7.05 9.293L6.343 10 12 15.657l1.414-1.414L9.172 10l4.242-4.243L12 4.343z" />
+        </svg>
+        <span>Back to search</span>
+      </button>
+    </Link>
+  )
+
   return (
-    <Fragment>
+    <div className="flex flex-col items-center h-full">
       <h2 className="font-semibold text-gray-800 tracking-tight text-2xl">
         {org.Service_Name}
       </h2>
-      <hr className="my-6 border-gray-400" />
+      <hr className="my-6 border-gray-400 w-full" />
       {renderContactInfo(org)}
-      <hr className="my-6 border-gray-400" />
+      <hr className="my-6 border-gray-400 w-full" />
       <p className="text-gray-800 font-light">{org.Description_of_Service}</p>
-    </Fragment>
+      {renderBackButton()}
+    </div>
   )
 }
 
