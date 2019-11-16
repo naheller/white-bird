@@ -55,7 +55,7 @@ const Search = () => {
   const renderShowMoreButton = () => (
     <button
       onClick={() => setShowNum(showNum + 25)}
-      className="mb-6 mt-2 bg-white hover:bg-gray-100 font-light text-gray-800 py-2 px-4 border rounded shadow-lg inline-flex items-center"
+      className="mt-2 mb-6 bg-gray-200 hover:bg-gray-300 font-semibold text-gray-800 py-2 px-4 rounded inline-flex items-center"
     >
       <span>Show more</span>
       <svg
