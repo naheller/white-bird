@@ -10534,6 +10534,18 @@ video {
   fill: currentColor;
 }
 
+.fill-red {
+  fill: #f56565;
+}
+
+.fill-green {
+  fill: #48bb78;
+}
+
+.fill-blue {
+  fill: #4299e1;
+}
+
 .stroke-current {
   stroke: currentColor;
 }
@@ -22037,6 +22049,18 @@ video {
 
   .sm\:fill-current {
     fill: currentColor;
+  }
+
+  .sm\:fill-red {
+    fill: #f56565;
+  }
+
+  .sm\:fill-green {
+    fill: #48bb78;
+  }
+
+  .sm\:fill-blue {
+    fill: #4299e1;
   }
 
   .sm\:stroke-current {
@@ -33545,6 +33569,18 @@ video {
     fill: currentColor;
   }
 
+  .md\:fill-red {
+    fill: #f56565;
+  }
+
+  .md\:fill-green {
+    fill: #48bb78;
+  }
+
+  .md\:fill-blue {
+    fill: #4299e1;
+  }
+
   .md\:stroke-current {
     stroke: currentColor;
   }
@@ -45051,6 +45087,18 @@ video {
     fill: currentColor;
   }
 
+  .lg\:fill-red {
+    fill: #f56565;
+  }
+
+  .lg\:fill-green {
+    fill: #48bb78;
+  }
+
+  .lg\:fill-blue {
+    fill: #4299e1;
+  }
+
   .lg\:stroke-current {
     stroke: currentColor;
   }
@@ -56555,6 +56603,18 @@ video {
 
   .xl\:fill-current {
     fill: currentColor;
+  }
+
+  .xl\:fill-red {
+    fill: #f56565;
+  }
+
+  .xl\:fill-green {
+    fill: #48bb78;
+  }
+
+  .xl\:fill-blue {
+    fill: #4299e1;
   }
 
   .xl\:stroke-current {
