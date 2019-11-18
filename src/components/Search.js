@@ -18,23 +18,26 @@ const Search = () => {
   const [showNum, setShowNum] = useState(20);
 
   useEffect(() => {
-    const cachedData = JSON.parse(localStorage.getItem("white-bird-help-book"));
+    // const cachedData = JSON.parse(localStorage.getItem("white-bird-help-book"));
     // cachedData !== null ? setOrgsFromCache(cachedData) : setOrgsFromServer()
     setOrgsFromServer();
   }, []);
 
   useEffect(() => {
-    if (fuse !== null) setSortedOrgs(fuse.search(searchTerm));
+    if (fuse !== null) {
+      const results = fuse.search(searchTerm);
+      setSortedOrgs(results);
+    }
   }, [searchTerm]);
 
-  const setOrgsFromCache = cachedData => {
-    setOrgs(cachedData.orgs);
-    fuse = new Fuse(cachedData.orgs, fuseOptions);
-  };
+  // const setOrgsFromCache = cachedData => {
+  //   setOrgs(cachedData.orgs);
+  //   fuse = new Fuse(cachedData.orgs, fuseOptions);
+  // };
 
   const setOrgsFromServer = () => {
     axios
-      .get("http://localhost:5000/api/organizations")
+      .get("https://white-bird.herokuapp.com/api/organizations")
       .then(res => {
         const orgs = res.data.sort((a, b) =>
           a.Service_Name > b.Service_Name ? 1 : -1
@@ -48,9 +51,24 @@ const Search = () => {
   };
 
   const getFormattedOrgs = () => {
-    return searchTerm.length
+    return !!searchTerm.length
       ? sortedOrgs.slice(0, showNum)
       : orgs.slice(0, showNum);
+  };
+
+  const updateSingleOrg = updatedValues => {
+    const targetOrgIndex = orgs.findIndex(org => org._id === updatedValues._id);
+    const targetSortedOrgIndex = sortedOrgs.findIndex(
+      org => org._id === updatedValues._id
+    );
+
+    if (targetOrgIndex !== -1) {
+      orgs[targetOrgIndex] = { ...updatedValues };
+      fuse = new Fuse(orgs, fuseOptions);
+    }
+
+    if (targetSortedOrgIndex !== -1)
+      sortedOrgs[targetSortedOrgIndex] = { ...updatedValues };
   };
 
   const renderShowMoreButton = () => (
@@ -78,7 +96,11 @@ const Search = () => {
         onChange={e => setSearchTerm(e.target.value)}
         value={searchTerm}
       ></input>
-      <Cards orgs={getFormattedOrgs()} searchTerm={searchTerm} />
+      <Cards
+        orgs={getFormattedOrgs()}
+        searchTerm={searchTerm}
+        updateSingleOrg={updateSingleOrg}
+      />
       {showNum < (searchTerm.length ? sortedOrgs.length : orgs.length) &&
         renderShowMoreButton()}
     </div>

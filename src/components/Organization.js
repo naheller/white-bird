@@ -1,35 +1,42 @@
 import React, { Fragment, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
+import getLoader from "../svg/getLoader";
 
-const Organization = ({ org, getOrg }) => {
+const Organization = ({ org, getOrg, getOrgLoading }) => {
   const [editMode, setEditMode] = useState(false);
   const [showFullDesc, setShowFullDesc] = useState(false);
-  const [editedOrg, setEditedOrg] = useState(org);  
-
-
+  const [editedOrg, setEditedOrg] = useState(org);
+  const [loading, setLoading] = useState(false);
 
   const getUpdates = () => {
     const updates = {};
 
     Object.keys(org).forEach(key => {
       if (org[key] !== editedOrg[key]) {
-        updates[key] = editedOrg[key]
+        updates[key] = editedOrg[key];
       }
-    })
+    });
 
     return updates;
-  }
+  };
 
   const submitUpdates = () => {
+    setLoading(true);
     const updates = getUpdates();
-    
-    axios.put(`http://localhost:5000/api/organizations/${org._id}`, { ...updates })
-    .then(res => { 
-      console.log('res', res) 
-      getOrg(org._id)
-    })
-    .catch(err => { console.log('err', err) })
-  }
+
+    axios
+      .put(`https://white-bird.herokuapp.com/api/organizations/${org._id}`, {
+        ...updates
+      })
+      .then(() => {
+        getOrg(org._id);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log("submitUpdates error:", err);
+        setLoading(false);
+      });
+  };
 
   const renderInfoTable = () => {
     const {
@@ -45,15 +52,16 @@ const Organization = ({ org, getOrg }) => {
     return (
       <table className="table-auto w-full text-gray-800 my-3">
         <tbody>
-          {!!Main_Phone.length && renderPhone(Main_Phone)}
-          {!!Physical_Site_Address_1.length &&
+          {!!(editMode || Main_Phone.length) && renderPhone(Main_Phone)}
+          {!!(editMode || Physical_Site_Address_1.length) &&
             renderPhysicalAddress(Physical_Site_Address_1)}
-          {!!Hours_of_Operation.length &&
+          {!!(editMode || Hours_of_Operation.length) &&
             renderHoursOfOperation(Hours_of_Operation)}
-          {!!ADA_Access.length && renderADAAccess(ADA_Access)}
-          {!!Email.length && renderEmail(Email)}
-          {!!Web_Address.length && renderWebsite(Web_Address)}
-          {!!Languages_Spoken.length && renderLanguages(Languages_Spoken)}
+          {!!(editMode || ADA_Access.length) && renderADAAccess(ADA_Access)}
+          {!!(editMode || Email.length) && renderEmail(Email)}
+          {!!(editMode || Web_Address.length) && renderWebsite(Web_Address)}
+          {!!(editMode || Languages_Spoken.length) &&
+            renderLanguages(Languages_Spoken)}
         </tbody>
       </table>
     );
@@ -217,12 +225,17 @@ const Organization = ({ org, getOrg }) => {
     if (editMode) {
       return (
         <textarea
-            rows={3}
-            className="px-2 py-1 border border-gray-400 rounded shadow-inner w-full"
-            onChange={e => setEditedOrg({ ...editedOrg, Description_of_Service: e.target.value })}
-            value={editedOrg.Description_of_Service}
-          />
-      )
+          rows={3}
+          className="px-2 py-1 border border-gray-400 font-light rounded shadow-inner w-full"
+          onChange={e =>
+            setEditedOrg({
+              ...editedOrg,
+              Description_of_Service: e.target.value
+            })
+          }
+          value={editedOrg.Description_of_Service}
+        />
+      );
     }
 
     return org.Description_of_Service.length > maxCharLength &&
@@ -255,14 +268,14 @@ const Organization = ({ org, getOrg }) => {
           <path d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z" />
         </svg>
       </button>
-    )
+    );
 
     const closeButton = (
       <button
         className="p-2 text-gray-800 hover:bg-gray-200 rounded-full"
         onClick={() => {
-          setEditMode(false)
-          setEditedOrg(org)
+          setEditMode(false);
+          setEditedOrg(org);
         }}
       >
         <svg
@@ -270,7 +283,7 @@ const Organization = ({ org, getOrg }) => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
         >
-          <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/>
+          <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z" />
         </svg>
       </button>
     );
@@ -279,8 +292,8 @@ const Organization = ({ org, getOrg }) => {
       <button
         className="p-2 text-gray-800 hover:bg-gray-200 rounded-full"
         onClick={() => {
-          submitUpdates()
-          setEditMode(false)
+          submitUpdates();
+          setEditMode(false);
         }}
       >
         <svg
@@ -288,32 +301,37 @@ const Organization = ({ org, getOrg }) => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
         >
-          <path d="M0 11l2-2 5 5L18 3l2 2L7 18z"/>
+          <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
         </svg>
       </button>
     );
 
-    const updates = getUpdates()
+    const updates = getUpdates();
 
     return (
       <div className="flex">
         {!!(editMode && Object.keys(updates).length) && submitButton}
         {editMode ? closeButton : editButton}
       </div>
-    )
+    );
   };
 
   const renderHeader = () => {
+    const inputBg = editedOrg.Service_Name.length ? "" : "bg-red-100";
+
     return (
       <div className="flex items-center justify-between font-semibold text-gray-800 text-xl">
         {editMode ? (
           <input
-            className="mr-2 px-2 py-1 border border-gray-400 rounded shadow-inner w-full"
-            onChange={e => setEditedOrg({ ...editedOrg, Service_Name: e.target.value })}
+            className={`mr-2 px-2 py-1 border border-gray-400 rounded shadow-inner w-full ${inputBg}`}
+            placeholder="Name is required"
+            onChange={e =>
+              setEditedOrg({ ...editedOrg, Service_Name: e.target.value })
+            }
             value={editedOrg.Service_Name}
           />
         ) : (
-          <h2 className="tracking-tight">{org.Service_Name}</h2>
+          <h2 className="py-1 tracking-tight">{org.Service_Name}</h2>
         )}
 
         {renderEditButtons()}
@@ -321,7 +339,9 @@ const Organization = ({ org, getOrg }) => {
     );
   };
 
-  return (
+  return loading || getOrgLoading ? (
+    getLoader()
+  ) : (
     <Fragment>
       {renderHeader()}
       {renderInfoTable()}
