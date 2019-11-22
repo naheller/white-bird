@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react'
 
 export default () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xlink="http://www.w3.org/1999/xlink"
     style={{
-      margin: "auto",
-      background: "rgb(255, 255, 255, 0)",
-      display: "block",
-      shapeRendering: "auto"
+      margin: 'auto',
+      background: 'rgb(255, 255, 255, 0)',
+      display: 'block',
+      shapeRendering: 'auto'
     }}
     width="100px"
     height="100px"
@@ -36,4 +36,4 @@ export default () => (
       ></animateTransform>
     </circle>
   </svg>
-);
+)

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 const Navbar = () => {
   return (
@@ -12,7 +12,7 @@ const Navbar = () => {
       </svg>
       <h1 className="text-lg font-semibold">White Bird Help Book</h1>
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

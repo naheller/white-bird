@@ -1,10 +1,10 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import Header from "./components/Header";
-import Container from "./components/Container";
-import Search from "./components/Search";
-import Footer from "./components/Footer";
+import Header from './components/Header'
+import Container from './components/Container'
+import Search from './components/Search'
+import Footer from './components/Footer'
 
 const App = () => {
   return (
@@ -23,7 +23,7 @@ const App = () => {
         <Footer />
       </Router>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
